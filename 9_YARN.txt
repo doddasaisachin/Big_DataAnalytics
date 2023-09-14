@@ -1,0 +1,18 @@
+!curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+!sudo apt-get install -y nodejs
+!npm install -g yarn
+!yarn --version
+!yarn init -y
+!yarn add axios
+!yarn start
+import subprocess
+
+package_name = "axios"
+yarn_command = f"yarn add {package_name}"
+try:
+
+ subprocess.run(yarn_command, shell=True, check=True)
+ print(f"Successfully installed {package_name} using Yarn.")
+except subprocess.CalledProcessError as e:
+ print(f"Error: Yarn command failed with error code {e.returncode}.")
+

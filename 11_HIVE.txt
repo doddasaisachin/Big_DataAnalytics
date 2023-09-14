@@ -1,0 +1,23 @@
+!apt-get update 
+
+!apt-get install hive hive-metastore hive-server2 -y
+
+!nohup hive --service metastore > /dev/null 2>&1 &
+!nohup hive --service hiveserver2 > /dev/null 2>&1 &
+import subprocess
+
+def check_hive_status():
+    try:
+        
+        result = subprocess.run(
+            ["hive", "-e", "SHOW DATABASES;"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL, # Redirect stderr to /dev/null
+            shell=True,
+            encoding="utf-8", # Specify encoding for Python 3
+        )
+        print("Hive is installed and running.")
+    except FileNotFoundError:
+        print("Hive is not installed.")
+
+check_hive_status()

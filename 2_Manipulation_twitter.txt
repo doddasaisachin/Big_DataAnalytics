@@ -1,0 +1,15 @@
+import pandas as pd
+path_to_data = '/content/dataset.csv'
+data = pd.read_csv(path_to_data)
+data.head()
+
+df_dropped = data.drop('Birthplace', axis=1)
+df_dropped.head()
+
+data.groupby('Sex').agg({'Political_party': 'count'})
+
+data.iloc[:5,8]
+
+desc = data["Name"].describe()
+
+desc

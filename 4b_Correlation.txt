@@ -1,0 +1,21 @@
+import numpy as np
+import pandas as pd
+
+iris_df = pd.read_csv('iris.csv')
+
+iris_corr_matrix = iris_df.corr()
+
+print("Correlation Matrix for Iris dataset:")
+print(iris_corr_matrix)
+print()
+
+boston_df = pd.read_csv('boston.csv')
+
+boston_corr_matrix = boston_df.corr()
+
+print("Correlation Matrix for Boston Housing dataset:")
+print(boston_corr_matrix)
+print()
+
+crim_corr = boston_df['CRIM'].corr(boston_df['TAX'])
+print("Correlation between 'CRIM' and 'TAX' in Boston Housing dataset:", crim_corr)

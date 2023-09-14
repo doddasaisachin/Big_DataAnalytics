@@ -1,0 +1,40 @@
+!apt-get install openjdk-8-jdk-headless -qq
+!wget -q https://downloads.apache.org/hadoop/common/hadoop-3.3.1/hadoop-3.3.1.tar.gz
+!tar xf hadoop-3.3.1.tar.gz
+
+import os
+os.environ['JAVA_HOME'] = '/usr/lib/jvm/java-8-openjdk-amd64'
+os.environ['HADOOP_HOME'] = '/content/hadoop-3.3.1'
+os.environ['HADOOP_CONF_DIR'] = '/content/hadoop-3.3.1/etc/hadoop'
+os.environ['PATH'] = os.environ['HADOOP_HOME'] + '/bin:' + os.environ['PATH']
+
+!cp /content/hadoop-3.3.1/etc/hadoop/core-site.xml /content/hadoop3.3.1/etc/hadoop/core-site.xml.bak
+!cp /content/hadoop-3.3.1/etc/hadoop/hdfs-site.xml /content/hadoop3.3.1/etc/hadoop/hdfs-site.xml.bak
+
+core_site_xml = '''
+<configuration>
+    <property>
+        <name>fs.default.name</name>
+        <value>hdfs://localhost:9000</value>
+    </property>
+</configuration>
+'''
+
+hdfs_site_xml = '''
+<configuration>
+    <property>
+        <name>dfs.replication</name>
+        <value>1</value>
+    </property>
+</configuration>
+'''
+
+with open('/content/hadoop-3.3.1/etc/hadoop/core-site.xml', 'w') as core_site_file:
+    core_site_file.write(core_site_xml)
+
+with open('/content/hadoop-3.3.1/etc/hadoop/hdfs-site.xml', 'w') as hdfs_site_file:
+    hdfs_site_file.write(hdfs_site_xml)
+
+!hdfs namenode -format
+
+!jps
